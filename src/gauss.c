@@ -27,16 +27,16 @@ int eliminate(Matrix *mat, Matrix *b){
             double *t= mat->data[i];
             mat->data[i]= mat->data[w];
             mat->data[w]= t;
-            double tempVal= b->data[i][0];
+            double temp= b->data[i][0];
             b->data[i][0]= b->data[w][0];
-            b->data[w][0]= tempVal;
+            b->data[w][0]= temp;
         }
 
-        double pivot= mat->data[i][i];		//przez co mnozymy
+        double y= mat->data[i][i];		//przez co mnozymy
         for(j=i; j<n; j++){
-            mat->data[i][j] /= pivot;
+            mat->data[i][j] /= y;
         }
-        b->data[i][0] /= pivot;
+        b->data[i][0] /= y;
         for(k= i+1; k<n; k++){			//eliminacja kolumn ponizej przekatnej
             double factor= mat->data[k][i];
             for(j=i; j<n; j++){

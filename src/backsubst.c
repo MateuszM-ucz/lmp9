@@ -7,7 +7,7 @@
 int  backsubst(Matrix *x, Matrix *mat, Matrix *b) {
 	
 	int size = mat->c;
-	if (mat->r != size || x->r != size || b->r != size || x->c != 1 || b->r != 1)
+	if (mat->r != size || x->r != size || b->r != size || x->c != 1 || b->c != 1)
 	{
 		return 2;
 	}

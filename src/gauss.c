@@ -1,4 +1,6 @@
 #include "gauss.h"
+#include <math.h>
+#include <stdio.h>
 #include "mat_io.h"
 /**
  * Zwraca 0 - elimnacja zakonczona sukcesem

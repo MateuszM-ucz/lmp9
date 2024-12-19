@@ -11,6 +11,29 @@ int eliminate(Matrix *mat, Matrix *b){
     int n = mat->r;
 
     for(int i=0; i<n; i++){
+        //wybor elementu glownego
+        double x = fabs(mat->data[i][i]);
+        int p = i;
+        for(int j=i+1; j<n; j++){
+            if(fabs(mat->data[j][i]) > x){
+                x = fabs(mat->data[j][i]);
+                p = j;
+            }
+        }
+
+        //zamiana wierszy
+        if(p != i){
+            double temp;
+            for(int k=0; k<n; k++){
+                temp = mat->data[p][k];
+                mat->data[p][k] = mat->data[i][k];
+                mat->data[i][k] = temp;
+            }
+            temp = b->data[p][0];
+            b->data[p][0] = b->data[i][0];
+            b->data[i][0] = temp;
+        }
+
         //sprawdzanie czy na przekatnej sa zera
         if(fabs(mat->data[i][i]) < eps){
             fprintf(stderr, "Macierz jest osobliwa (dzielenie przez zero w wierszu %d)\n", i);

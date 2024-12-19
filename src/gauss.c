@@ -2,6 +2,14 @@
 #include <math.h>
 #include <stdio.h>
 #include "mat_io.h"
+
+void swap(double* a, double* b)
+{
+    double temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
 /**
  * Zwraca 0 - elimnacja zakonczona sukcesem
  * Zwraca 1 - macierz osobliwa - dzielenie przez 0
@@ -10,28 +18,29 @@ int eliminate(Matrix *mat, Matrix *b){
     double eps = 0.000000001;
     int n = mat->r;
 
-    for(int i=0; i<n; i++){
-        //wybor elementu glownego
-        double x = fabs(mat->data[i][i]);
-        int p = i;
-        for(int j=i+1; j<n; j++){
-            if(fabs(mat->data[j][i]) > x){
-                x = fabs(mat->data[j][i]);
-                p = j;
+    for (int i=0; i<n; i++)
+    {
+        // Wybór elementu głównego
+        double minVal = fabs(mat->data[i][i]);
+        int pozycja = i;
+
+        for (int j = i + 1; j < n; j++)
+        {
+            double val = fabs(mat->data[j][i]);
+            if (val > minVal)
+            {
+                minVal = val;
+                pozycja = j;
             }
         }
 
-        //zamiana wierszy
-        if(p != i){
-            double temp;
-            for(int k=0; k<n; k++){
-                temp = mat->data[p][k];
-                mat->data[p][k] = mat->data[i][k];
-                mat->data[i][k] = temp;
+        if (pozycja != i)
+        {
+            for (int k = 0; k < n; k++)
+            {
+                swap(&mat->data[pozycja][k], &mat->data[i][k]);
             }
-            temp = b->data[p][0];
-            b->data[p][0] = b->data[i][0];
-            b->data[i][0] = temp;
+            swap(&b->data[pozycja][0], &b->data[i][0]);
         }
 
         //sprawdzanie czy na przekatnej sa zera
